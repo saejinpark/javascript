@@ -1,28 +1,54 @@
-function add(x, y) {
-  return x + y
+class Person {
+  constructor(firstName, lastName, age) {
+    this.firstName = firstName
+    this.lastName = lastName
+    this.age = age
+  }
+
+  set firstName(newFirstName) {
+    if(typeof newFirstName === "string" && newFirstName.length > 0)  {
+      this._firstName = newFirstName
+    } else {
+      console.error("First name must be a non-empty string")
+    }
+  }
+
+  set lastName(newLastName) {
+    if(typeof newLastName === "string" && newLastName.length > 0)  {
+      this._lastName = newLastName
+    } else {
+      console.error("Last name must be a non-empty string")
+    }
+  }
+
+  set age(newAge) {
+    if(typeof newAge === "number" && newAge >= 0) {
+      this._age = newAge
+    } else {
+      console.error("Age must be a non-empty number")
+    }
+  }
+
+  get firstName() {
+    return this._firstName
+  }
+
+  get lastName() {
+    return this._lastName
+  }
+
+  get age() {
+    return this._age
+  }
+
+  get fullName() {
+    return this._firstName + this._lastName
+  }
 }
 
-function subtract(x, y) {
-  return x - y
-}
+const person = new Person("Spongebob", "Squarepants", 30)
 
-function multiply(x, y) {
-  return x * y
-}
-
-function divide(x, y) {
-  return x / y
-}
-
-function isEven(number) {
-  return number % 2 === 0 ? true : false
-}
-
-function isValidEmail(email) {
-
-  return email.includes("@") ? true : false
-}
-
-console.log(isValidEmail("Bro@fake.com"))
-console.log(isValidEmail("ElonMusk.com"))
-console.log(isValidEmail("Zuckerborg@Meta.com"))
+console.log(person.firstName)
+console.log(person.lastName)
+console.log(person.fullName)
+console.log(person.age)
