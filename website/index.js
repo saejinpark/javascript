@@ -1,54 +1,45 @@
-class Person {
-  constructor(firstName, lastName, age) {
-    this.firstName = firstName
-    this.lastName = lastName
-    this.age = age
-  }
+const display = document.getElementById("display");
 
-  set firstName(newFirstName) {
-    if(typeof newFirstName === "string" && newFirstName.length > 0)  {
-      this._firstName = newFirstName
-    } else {
-      console.error("First name must be a non-empty string")
-    }
-  }
+let timer = null;
+let startTime = 0;
+let elapsedTime = 0;
+let isRunning = false;
 
-  set lastName(newLastName) {
-    if(typeof newLastName === "string" && newLastName.length > 0)  {
-      this._lastName = newLastName
-    } else {
-      console.error("Last name must be a non-empty string")
-    }
-  }
-
-  set age(newAge) {
-    if(typeof newAge === "number" && newAge >= 0) {
-      this._age = newAge
-    } else {
-      console.error("Age must be a non-empty number")
-    }
-  }
-
-  get firstName() {
-    return this._firstName
-  }
-
-  get lastName() {
-    return this._lastName
-  }
-
-  get age() {
-    return this._age
-  }
-
-  get fullName() {
-    return this._firstName + this._lastName
+function start() {
+  if (!isRunning) {
+    isRunning = true
+    startTime = Date.now() - elapsedTime;
+    timer = setInterval(update, 10);
   }
 }
 
-const person = new Person("Spongebob", "Squarepants", 30)
+function stop() {
+  if (isRunning) {
+    clearInterval(timer);
+    elapsedTime - Date.now() - startTime;
+    isRunning - false;
+  }
+}
 
-console.log(person.firstName)
-console.log(person.lastName)
-console.log(person.fullName)
-console.log(person.age)
+function reset() {
+  clearInterval(timer)
+  startTime = 0
+  elapsedTime = 0
+  isRunning = false;
+
+  display.textContent = "00:00:00:00"
+}
+
+function update() {
+  const currentTime = Date.now();
+  elapsedTime = currentTime - startTime;
+
+  let hours = Math.floor(elapsedTime / (1000 * 60 * 60)).toString().padStart(2, "0");
+  let minutes = Math.floor(elapsedTime / (1000 * 60) % 60).toString().padStart(2, "0");
+  let seconds = Math.floor(elapsedTime / 1000 % 60).toString().padStart(2, "0");
+  let milliseconds = Math.floor((elapsedTime % 1000) / 10).toString().padStart(2, "0");
+
+  display.textContent = `${hours}:${minutes}:${seconds}:${milliseconds}`
+}
+
+
